@@ -1,20 +1,20 @@
-defmodule Timex.Ecto.DateTime do
+defmodule Timex.EctoOne.DateTime do
   @moduledoc """
   Support for using Timex with :datetime fields
   """
   use Timex
 
-  @behaviour Ecto.Type
+  @behaviour EctoOne.Type
 
   def type, do: :datetime
 
   @doc """
-  We can let Ecto handle blank input
+  We can let EctoOne handle blank input
   """
-  defdelegate blank?(value), to: Ecto.Type
+  defdelegate blank?(value), to: EctoOne.Type
 
   @doc """
-  Handle casting to Timex.Ecto.DateTime
+  Handle casting to Timex.EctoOne.DateTime
   """
   def cast(%DateTime{timezone: nil} = datetime), do: {:ok, %{datetime | :timezone => %TimezoneInfo{}}}
   def cast(%DateTime{} = datetime),              do: {:ok, datetime}
@@ -27,14 +27,14 @@ defmodule Timex.Ecto.DateTime do
     {:ok, %{datetime | :ms => ms}}
   end
   def cast(input) do
-    case Ecto.DateTime.cast(input) do
+    case EctoOne.DateTime.cast(input) do
       {:ok, datetime} -> load({{datetime.year, datetime.month, datetime.day}, {datetime.hour, datetime.min, datetime.sec, datetime.usec}})
       :error -> :error
     end
   end
 
   @doc """
-  Load from the native Ecto representation
+  Load from the native EctoOne representation
   """
   def load({{year, month, day}, {hour, min, sec, usec}}) do
     datetime = Date.from({{year, month, day}, {hour, min, sec}})
@@ -43,7 +43,7 @@ defmodule Timex.Ecto.DateTime do
   def load(_), do: :error
 
   @doc """
-  Convert to native Ecto representation
+  Convert to native EctoOne representation
   """
   def dump(%DateTime{} = date) do
     %DateTime{year: y, month: m, day: d, hour: h, minute: min, second: s, ms: ms} = Timezone.convert(date, "UTC")

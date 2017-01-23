@@ -1,8 +1,8 @@
-defmodule TimexEcto.Mixfile do
+defmodule TimexEctoOne.Mixfile do
   use Mix.Project
 
   def project do
-    [app: :timex_ecto,
+    [app: :timex_ecto_one,
      version: "0.9.0",
      elixir: "~> 1.0",
      build_embedded: Mix.env == :prod,
@@ -15,7 +15,7 @@ defmodule TimexEcto.Mixfile do
   #
   # Type `mix help compile.app` for more information
   def application do
-    [applications: [:logger, :ecto, :timex]]
+    [applications: [:logger, :ecto_one, :timex]]
   end
 
   # Dependencies can be Hex packages:
@@ -29,7 +29,7 @@ defmodule TimexEcto.Mixfile do
   # Type `mix help deps` for more examples and options
   defp deps do
     [{:timex, ">= 0.19.0"},
-     {:ecto, "~> 1.1"},
+     {:ecto_one, github: "mkaszubowski/ecto", branch: "ecto_one"},
      {:earmark, ">= 0.0.0", only: :dev},
      {:ex_doc, "~> 0.10", only: :dev}]
   end
@@ -38,7 +38,7 @@ defmodule TimexEcto.Mixfile do
     [ files: ["lib", "priv", "mix.exs", "README.md", "LICENSE.md"],
       maintainers: ["Paul Schoenfelder"],
       licenses: ["MIT"],
-      description: "A plugin for Ecto and Timex which allows use of Timex types with Ecto",
-      links: %{ "GitHub": "https://github.com/bitwalker/timex_ecto", "Docs": "https://timex.readme.io" } ]
+      description: "A plugin for EctoOne and Timex which allows use of Timex types with EctoOne",
+      links: %{ "GitHub": "https://github.com/bitwalker/timex_ecto_one", "Docs": "https://timex.readme.io" } ]
   end
 end

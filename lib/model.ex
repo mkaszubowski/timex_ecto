@@ -1,13 +1,13 @@
-defmodule Timex.Ecto.Timestamps do
+defmodule Timex.EctoOne.Timestamps do
   @moduledoc """
-  Provides a simple way to use Timex with Ecto timestamps.
+  Provides a simple way to use Timex with EctoOne timestamps.
 
   # Example
 
   ```
   defmodule User do
-    use Ecto.Model
-    use Timex.Ecto.Timestamps
+    use EctoOne.Model
+    use Timex.EctoOne.Timestamps
 
     schema "user" do
       field :name, :string
@@ -20,8 +20,8 @@ defmodule Timex.Ecto.Timestamps do
   ```elixir
   def model do
     quote do
-      use Ecto.Model
-      use Timex.Ecto.Timestamps
+      use EctoOne.Model
+      use Timex.EctoOne.Timestamps
     end
   end
   ```
@@ -30,7 +30,7 @@ defmodule Timex.Ecto.Timestamps do
 
   """
 
-  @default_timestamps_opts [type: Timex.Ecto.DateTime]
+  @default_timestamps_opts [type: Timex.EctoOne.DateTime]
   defmacro __using__(opts) do
     quote do
       @timestamps_opts unquote(Dict.merge(opts, @default_timestamps_opts))

@@ -1,21 +1,21 @@
-defmodule Timex.Ecto.Time do
+defmodule Timex.EctoOne.Time do
   @moduledoc """
   Support for using Timex with :time fields
   """
   use Timex
-  alias Ecto.Time
+  alias EctoOne.Time
 
-  @behaviour Ecto.Type
+  @behaviour EctoOne.Type
 
   def type, do: :time
 
   @doc """
-  We can let Ecto handle blank input
+  We can let EctoOne handle blank input
   """
-  defdelegate blank?(value), to: Ecto.Type
+  defdelegate blank?(value), to: EctoOne.Type
 
   @doc """
-  Handle casting to Timex.Ecto.Time
+  Handle casting to Timex.EctoOne.Time
   """
   def cast(input) when is_binary(input) do
     case DateFormat.parse(input, "{ISOtime}") do
@@ -34,14 +34,14 @@ defmodule Timex.Ecto.Time do
     load({h, mm, s, ms * 1_000})
   end
   def cast(input) do
-    case Ecto.Time.cast(input) do
+    case EctoOne.Time.cast(input) do
       {:ok, time} -> load({time.hour, time.minute, time.second, time.usecs})
       :error -> :error
     end
   end
 
   @doc """
-  Load from the native Ecto representation
+  Load from the native EctoOne representation
   """
   def load({hour, minute, second, usecs}) do
     time = %{Date.epoch | :hour => hour, :minute => minute, :second => second, :ms => usecs / 1_000} |> Date.to_timestamp(:epoch)
@@ -50,7 +50,7 @@ defmodule Timex.Ecto.Time do
   def load(_), do: :error
 
   @doc """
-  Convert to the native Ecto representation
+  Convert to the native EctoOne representation
   """
   def dump({_mega, _sec, _micro} = timestamp) do
     %DateTime{hour: h, minute: m, second: s, ms: ms} = Date.from(timestamp, :timestamp, :epoch)

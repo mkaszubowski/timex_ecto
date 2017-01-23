@@ -1,4 +1,4 @@
-defmodule Timex.Ecto.Test do
+defmodule Timex.EctoOne.Test do
   use ExUnit.Case
 
   test "placeholder" do

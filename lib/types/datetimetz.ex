@@ -1,4 +1,4 @@
-defmodule Timex.Ecto.DateTimeWithTimezone do
+defmodule Timex.EctoOne.DateTimeWithTimezone do
   @moduledoc """
   This is a special type for storing datetime + timezone information as a composite type.
 
@@ -24,17 +24,17 @@ defmodule Timex.Ecto.DateTimeWithTimezone do
   """
   use Timex
 
-  @behaviour Ecto.Type
+  @behaviour EctoOne.Type
 
   def type, do: :datetimetz
 
   @doc """
-  We can let Ecto handle blank input
+  We can let EctoOne handle blank input
   """
-  defdelegate blank?(value), to: Ecto.Type
+  defdelegate blank?(value), to: EctoOne.Type
 
   @doc """
-  Handle casting to Timex.Ecto.DateTimeWithTimezone
+  Handle casting to Timex.EctoOne.DateTimeWithTimezone
   """
   def cast(%DateTime{timezone: nil} = datetime), do: {:ok, %{datetime | :timezone => %TimezoneInfo{}}}
   def cast(%DateTime{} = datetime), do: {:ok, datetime}
@@ -47,7 +47,7 @@ defmodule Timex.Ecto.DateTimeWithTimezone do
     {:ok, %{datetime | :ms => ms}}
   end
   def cast(input) do
-    case Ecto.DateTimeWithTimezone.cast(input) do
+    case EctoOne.DateTimeWithTimezone.cast(input) do
       {:ok, datetime} ->
         load({{{datetime.year, datetime.month, datetime.day},
                {datetime.hour, datetime.min, datetime.sec, datetime.usec}
@@ -59,7 +59,7 @@ defmodule Timex.Ecto.DateTimeWithTimezone do
   end
 
   @doc """
-  Load from the native Ecto representation
+  Load from the native EctoOne representation
   """
   def load({ {{year, month, day}, {hour, min, sec, usec}}, timezone}) do
     datetime = Date.from({{year, month, day}, {hour, min, sec}})
@@ -70,7 +70,7 @@ defmodule Timex.Ecto.DateTimeWithTimezone do
   def load(_), do: :error
 
   @doc """
-  Convert to the native Ecto representation
+  Convert to the native EctoOne representation
   """
   def dump(%DateTime{timezone: nil} = datetime) do
     {date, {hour, min, second}} = DateConvert.to_erlang_datetime(datetime)
