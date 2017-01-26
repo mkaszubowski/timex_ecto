@@ -4,11 +4,11 @@ defmodule TimexEctoOne.Mixfile do
   def project do
     [app: :timex_ecto_one,
      version: "0.9.0",
-     elixir: "~> 1.0",
+     elixir: "~> 1.4",
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
-     deps: deps,
-     package: package]
+     deps: deps(),
+     package: package()]
   end
 
   # Configuration for the OTP application
